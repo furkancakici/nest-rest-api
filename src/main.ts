@@ -11,7 +11,7 @@ async function bootstrap() {
         .setTitle('nest-rest-api')
         .setDescription('Nest example api')
         .setVersion('1.0')
-        .addTag('nestapp')
+        .addTag('nest-rest')
         .build()
     const document = SwaggerModule.createDocument(app, config)
     SwaggerModule.setup('api', app, document)
