@@ -1,4 +1,4 @@
-import { registerDecorator, ValidationOptions, ValidationArguments } from 'class-validator'
+import { registerDecorator, ValidationOptions } from 'class-validator'
 
 export function IsAdult(validationOptions?: ValidationOptions) {
     // eslint-disable-next-line @typescript-eslint/ban-types
@@ -9,7 +9,7 @@ export function IsAdult(validationOptions?: ValidationOptions) {
             propertyName: propertyName,
             options: validationOptions,
             validator: {
-                validate(value: any, args: ValidationArguments) {
+                validate(value: any) {
                     const today = new Date()
                     const birthDay = new Date(value)
                     const age = today.getFullYear() - birthDay.getFullYear()
