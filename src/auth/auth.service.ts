@@ -7,7 +7,7 @@ import { InjectRepository } from '@nestjs/typeorm'
 
 @Injectable()
 export class AuthService {
-    constructor(@InjectRepository(Auth) private readonly userRepository: Repository<Auth>) {}
+    constructor(@InjectRepository(Auth) private readonly authRepository: Repository<Auth>) {}
 
     async create(createAuthDto: CreateAuthDto) {
         const newUser = new Auth()
@@ -16,36 +16,36 @@ export class AuthService {
         newUser.birthDay = createAuthDto.birthDay
         newUser.password = createAuthDto.password
 
-        const result = this.userRepository.save(newUser)
+        const result = this.authRepository.save(newUser)
 
         if (!result) return { success: false, message: '', result }
         return { success: true, message: '', result: newUser }
     }
 
     async findAll() {
-        const result = await this.userRepository.find()
+        const result = await this.authRepository.find()
 
         if (!result) return { success: false, message: '', result }
         return { success: true, message: '', result }
     }
 
     async findOne(id: string) {
-        const result = await this.userRepository.findOneBy({ id })
+        const result = await this.authRepository.findOneBy({ id })
 
         if (!result) return { success: false, message: '', result }
         return { success: true, message: '', result }
     }
 
     async update(id: number, updateUserDto: UpdateAuthDto) {
-        const result = await this.userRepository.update(id, updateUserDto)
+        const result = await this.authRepository.update(id, updateUserDto)
 
         if (!result) return { success: false, message: '', result }
         return { success: true, message: '', result: updateUserDto }
     }
 
     async remove(id: string) {
-        const user = await this.userRepository.findOneBy({ id })
-        const result = await this.userRepository.softDelete({ id })
+        const user = await this.authRepository.findOneBy({ id })
+        const result = await this.authRepository.softDelete({ id })
 
         if (!result) return { success: false, message: '', result: user }
         return { success: true, message: '', result: user }
