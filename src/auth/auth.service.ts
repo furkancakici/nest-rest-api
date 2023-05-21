@@ -1,19 +1,20 @@
 import { Injectable } from '@nestjs/common'
-import { CreateUserDto } from './dto/create-user.dto'
-import { UpdateUserDto } from './dto/update-user.dto'
+import { CreateAuthDto } from './dto/create-auth.dto'
+import { UpdateAuthDto } from './dto/update-auth.dto'
 import { Repository } from 'typeorm'
-import { User } from './entities/user.entity'
+import { Auth } from './entities/auth.entity'
 import { InjectRepository } from '@nestjs/typeorm'
 
 @Injectable()
-export class UserService {
-    constructor(@InjectRepository(User) private readonly userRepository: Repository<User>) {}
+export class AuthService {
+    constructor(@InjectRepository(Auth) private readonly userRepository: Repository<Auth>) {}
 
-    async create(createUserDto: CreateUserDto) {
-        const newUser = new User()
-        newUser.name = createUserDto.name
-        newUser.email = createUserDto.email
-        newUser.birthDay = createUserDto.birthDay
+    async create(createAuthDto: CreateAuthDto) {
+        const newUser = new Auth()
+        newUser.name = createAuthDto.name
+        newUser.email = createAuthDto.email
+        newUser.birthDay = createAuthDto.birthDay
+        newUser.password = createAuthDto.password
 
         const result = this.userRepository.save(newUser)
 
@@ -35,7 +36,7 @@ export class UserService {
         return { success: true, message: '', result }
     }
 
-    async update(id: number, updateUserDto: UpdateUserDto) {
+    async update(id: number, updateUserDto: UpdateAuthDto) {
         const result = await this.userRepository.update(id, updateUserDto)
 
         if (!result) return { success: false, message: '', result }

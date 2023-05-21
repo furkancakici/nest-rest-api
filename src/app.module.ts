@@ -1,10 +1,10 @@
 import { Module } from '@nestjs/common'
+import { ConfigModule, ConfigService } from '@nestjs/config'
+import { TypeOrmModule } from '@nestjs/typeorm'
 import { AppController } from './app.controller'
 import { AppService } from './app.service'
-import { TypeOrmModule } from '@nestjs/typeorm'
-import { UserModule } from './user/user.module'
-import { User } from './user/entities/user.entity'
-import { ConfigModule, ConfigService } from '@nestjs/config'
+import { AuthModule } from './auth/auth.module'
+import { Auth } from './auth/entities/auth.entity'
 
 @Module({
     imports: [
@@ -17,12 +17,12 @@ import { ConfigModule, ConfigService } from '@nestjs/config'
                 username: configService.get('POSTGRES_USER'),
                 password: configService.get('POSTGRES_PASSWORD'),
                 database: configService.get('POSTGRES_DB'),
-                entities: [User],
+                entities: [Auth],
                 synchronize: true
             }),
             inject: [ConfigService]
         }),
-        UserModule
+        AuthModule
     ],
     controllers: [AppController],
     providers: [AppService]

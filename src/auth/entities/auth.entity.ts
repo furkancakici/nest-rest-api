@@ -1,8 +1,8 @@
 import { BaseEntity } from 'src/common/utils/base.entity'
 import { Column, Entity } from 'typeorm'
 
-@Entity({ name: 'users' })
-export class User extends BaseEntity {
+@Entity({ name: 'auth' })
+export class Auth extends BaseEntity {
     @Column()
     name: string
 
@@ -10,5 +10,8 @@ export class User extends BaseEntity {
     email: string
 
     @Column()
-    birthDay: Date
+    password: string
+
+    @Column()
+    birthDay?: Date
 }
