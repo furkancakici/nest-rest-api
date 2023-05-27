@@ -9,45 +9,46 @@ import { InjectRepository } from '@nestjs/typeorm'
 export class AuthService {
     constructor(@InjectRepository(Auth) private readonly authRepository: Repository<Auth>) {}
 
+    async signinLocal(createAuthDto: CreateAuthDto) {
+        const result = this.authRepository.findOneBy({ email: createAuthDto.email })
+
+        return result
+    }
+
     async create(createAuthDto: CreateAuthDto) {
-        const newUser = new Auth()
-        newUser.name = createAuthDto.name
-        newUser.email = createAuthDto.email
-        newUser.birthDay = createAuthDto.birthDay
-        newUser.password = createAuthDto.password
+        const newAuth = new Auth()
+        newAuth.name = createAuthDto.name
+        newAuth.email = createAuthDto.email
+        newAuth.birthDay = createAuthDto.birthDay
+        newAuth.password = createAuthDto.password
 
-        const result = this.authRepository.save(newUser)
+        const result = this.authRepository.save(newAuth)
 
-        if (!result) return { success: false, message: '', result }
-        return { success: true, message: '', result: newUser }
+        return result
     }
 
     async findAll() {
         const result = await this.authRepository.find()
 
-        if (!result) return { success: false, message: '', result }
-        return { success: true, message: '', result }
+        return result
     }
 
     async findOne(id: string) {
         const result = await this.authRepository.findOneBy({ id })
 
-        if (!result) return { success: false, message: '', result }
-        return { success: true, message: '', result }
+        return result
     }
 
     async update(id: number, updateUserDto: UpdateAuthDto) {
         const result = await this.authRepository.update(id, updateUserDto)
 
-        if (!result) return { success: false, message: '', result }
-        return { success: true, message: '', result: updateUserDto }
+        return result
     }
 
     async remove(id: string) {
         const user = await this.authRepository.findOneBy({ id })
-        const result = await this.authRepository.softDelete({ id })
+        await this.authRepository.softDelete({ id })
 
-        if (!result) return { success: false, message: '', result: user }
-        return { success: true, message: '', result: user }
+        return { data: user }
     }
 }
