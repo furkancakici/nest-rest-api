@@ -22,7 +22,7 @@ export class AuthService {
         newAuth.birthDay = createAuthDto.birthDay
         newAuth.password = createAuthDto.password
 
-        const result = this.authRepository.save(newAuth)
+        const result = await this.authRepository.save(newAuth)
 
         return result
     }
@@ -49,6 +49,6 @@ export class AuthService {
         const user = await this.authRepository.findOneBy({ id })
         await this.authRepository.softDelete({ id })
 
-        return { data: user }
+        return user
     }
 }
