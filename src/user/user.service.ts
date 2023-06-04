@@ -11,9 +11,8 @@ export class UserService {
 
     async create(createUserDto: CreateUserDto) {
         const newUser = new User()
-        newUser.name = createUserDto.name
+        newUser.username = createUserDto.username
         newUser.email = createUserDto.email
-        newUser.birthDay = createUserDto.birthDay
         newUser.password = createUserDto.password
 
         const result = await this.userRepository.save(newUser)
