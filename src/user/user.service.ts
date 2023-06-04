@@ -50,7 +50,7 @@ export class UserService {
     }
 
     async findOneByUsername(username: string) {
-        const result = await this.userRepository.findOneBy({ username })
+        const result = await this.userRepository.findOne({ where: { username } })
 
         return result
     }
