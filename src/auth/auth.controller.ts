@@ -13,7 +13,7 @@ export class AuthController {
     }
 
     @UseGuards(JwtAuthGuard)
-    @Get('profile')
+    @Get('profilee')
     async getProfile(@Request() req) {
         return req.user
     }
