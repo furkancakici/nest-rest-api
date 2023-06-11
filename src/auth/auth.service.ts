@@ -12,7 +12,7 @@ export class AuthService {
         const user = await this.userService.findOneByUsername(username)
 
         if (user && (await bcrypt.compare(password, user.password))) {
-            const { password, username, email } = user
+            const { username, email } = user
 
             return { username, email }
         }
